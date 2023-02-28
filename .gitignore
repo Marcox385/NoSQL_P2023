@@ -1,0 +1,8 @@
+# Archivos específicos
+*.docx
+*.tmp
+*.vsdx
+*.zip
+
+# Directorios
+Clases/
