@@ -1,3 +1,15 @@
 {
-    "owner": "IS727272 - Corderro Hernández, Marco Ricardo"
+    "owner": "IS727272 - Corderro Hernández, Marco Ricardo",
+    "bookStructure": {
+        "title": "[title]",
+        "publishDate": "[publish date]",
+        "description": "[description]",
+        "authors": ["[author 1]", "[author 2]"],
+        "pageCount": 0,
+        "genre": "[genre]",
+        "language": "[language]",
+        "ISBN": "[ISBN]",
+        "mature": false,
+        "formats": ["[physical format]", "[digital format]4"]
+    }
 }
