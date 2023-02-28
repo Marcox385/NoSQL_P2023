@@ -1,0 +1,67 @@
+// Crear o cambiar a base de datos del laboratorio
+use lab_1
+
+// Asegurar creación de colección
+db.books.insertMany([{}])
+db.books.deleteMany({})
+
+// Insertar datos en la colección
+db.books.insertMany([
+    {
+        "title": "Diary of a Wimpy Kid",
+        "publishDate": "04-01-2007",
+        "description": "Boys don’t keep diaries―or do they?",
+        "authors": ["Jeff Kinney"],
+        "pageCount": 224,
+        "genre": "humour",
+        "language": "english",
+        "ISBN": "1419741853",
+        "mature": false,
+        "formats": ["paperback cover", "hardcover", "audiobook", "e-book"]
+    },
+    {
+        "title": "Calculus and Analytic Geometry (9th Edition)",
+        "publishDate": "08-14-1995",
+        "description": "Textbook presents a modern view of calculus enhanced by the use of technology.",
+        "authors": ["George B. Thomas", "Ross L. Finney"],
+        "pageCount": 1264,
+        "genre": "BDSM",
+        "language": "english",
+        "ISBN": "0201531747",
+        "mature": true,
+        "formats": ["paperback cover", "hardcover"]
+    },
+    {
+        "title": "The Mixers Manual: The Cocktail Bible for Serious Drinkers",
+        "publishDate": "11-04-2014",
+        "description": "Mix drinks like a pro with this indispensible collection of 150 of the world's finest cocktails",
+        "authors": ["Dan Jones"],
+        "pageCount": 128,
+        "genre": "cook",
+        "language": "english",
+        "ISBN": "1742707742",
+        "mature": true,
+        "formats": ["hardcover"]
+    },
+    {
+        "title": "Akira Yoshizawa, Japan's Greatest Origami Master: Featuring over 60 Models and 1000 Diagrams by the Master",
+        "publishDate": "10-11-2016",
+        "description": "This collection of projects by the 'father of modern origami' contains detailed instructions for 60 of the master's original works.",
+        "authors": ["Akira Yoshizawa", "Kazuo Hamada", "Kiyo Yoshizawa", "Robert J. Lang"],
+        "pageCount": 192,
+        "genre": "handcrafting",
+        "language": "english",
+        "ISBN": "4805313935",
+        "mature": false,
+        "formats": ["hardcover", "e-book"]
+    },
+])
+
+// Actualizar varios libros
+db.books.updateMany(
+    {"mature": true},
+    {$set: {"ageRestriction": 18}}
+)
+
+// Borrar un libro
+db.books.deleteOne({ "ISBN": "1419741853" })
