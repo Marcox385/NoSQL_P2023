@@ -41,8 +41,6 @@ def list_books(request: Request, rating: float = 0, num_pages: str = '', ratings
         elif (v):
             search_params[k] = {'$regex': v}
     
-    print(search_params)
-    
     books = list(request.app.database["books"]
                  .find(search_params)
                  .skip(skip)
