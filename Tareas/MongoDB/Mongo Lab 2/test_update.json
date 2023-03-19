@@ -1,0 +1,13 @@
+{
+    "title": "TESTING999999",
+    "authors": ["TEST0", "TEST1"],
+    "average_rating": 0.0,
+    "isbn": "00TEST",
+    "isbn13": "01TEST",
+    "language_code": "test_lang",
+    "num_pages": 1,
+    "ratings_count": 999,
+    "text_reviews_count": 244,
+    "publication_date": "13/12/2000",
+    "publisher": "ITESuffering"
+}

@@ -1,0 +1,6 @@
+Here are the steps and indices created for this lab:
+
+use iteso;
+db.books.createIndex({ "num_pages": 1 }); // First numerical index
+db.books.createIndex({ "ratings_count": 1 }); // Second numerical index
+db.books.createIndex({ "title": "text" }); // Text index
