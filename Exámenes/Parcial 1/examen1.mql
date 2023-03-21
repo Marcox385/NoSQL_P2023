@@ -1,0 +1,28 @@
+db.products.insertMany([
+    {
+        "nombre": "galletas",
+        "codigo": 123456789,
+        "descripcion": "galletas de animalitos",
+        "categoria": "alimentos",
+        "existencia": 250,
+        "precio": 40.2
+    },
+    {
+        "nombre": "huevos",
+        "codigo": 8008135,
+        "descripcion": "huevos rojos de rancho",
+        "categoria": "canasta básica",
+        "existencia": 1400,
+        "precio": 29.9
+    },
+    {
+        "nombre": "jamon",
+        "codigo": 80047,
+        "descripcion": "jamon virgilio e puritano",
+        "categoria": "carniceria",
+        "existencia": 500,
+        "precio": 30
+    },
+])
+
+db.carts.deleteMany({"activo": "true"})

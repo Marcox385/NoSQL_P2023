@@ -1,0 +1,16 @@
+{
+    "cliente": "Marco Cordero",
+    "productos": [
+        {
+            "codigo": 123456789,
+            "cantidad": 1,
+            "total_producto": 40.2  
+        },
+        {
+            "codigo": 8008135,
+            "cantidad": 2,
+            "total_producto": 59.8
+        }
+    ],
+    "total": 100.0
+}
