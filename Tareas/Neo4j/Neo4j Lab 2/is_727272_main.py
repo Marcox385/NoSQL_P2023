@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import os
+# Modified main.py base by IS727272 - Cordero Hernández, Marco Ricardo
+import os, time
 
 from neo4j import GraphDatabase
 from neo4j.exceptions import ClientError, ConstraintError
@@ -57,7 +58,8 @@ class NFLStats(object):
                 exit()
 
     def init(self, source):
-        # self._generic_write_tx(self.transactions['DELETE_ALL']) # Uncomment for initial data deletion
+        start = time.time() # Starting time of operations
+        self._generic_write_tx(self.transactions['DELETE_ALL']) # Uncomment for initial data deletion
         with open(source, newline='') as f:
             contents = f.readlines()
             segment_type = ''
@@ -91,6 +93,8 @@ class NFLStats(object):
                             self._generic_write_tx(self.transactions[segment_type], **vals)
                     else:
                         raise ValueError('Invalid node type. Incomplete operations made.')
+            else:
+                print(f'All operations completed successfully in {time.time() - start:.3f} seconds.')
 
 if __name__ == "__main__":
     # Read connection env variables
