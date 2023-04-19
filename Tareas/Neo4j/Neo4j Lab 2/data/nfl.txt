@@ -1,0 +1,120 @@
+- CONFERENCIAS -
+name
+AFC
+NFC
+
+- POSICIONES -
+id|name|type
+QB|Mariscal de campo|Backs
+TE|Ala cerrada|Backs
+WR|Receptor abierto|Backs
+RB|Corredor|Backs
+LB|Apoyador|Línea defensiva
+CB|Esquinero|Línea defensiva
+S|Profundo|Línea defensiva
+K|Pateador|Especial
+P|Despeje|Especial
+C|Centro|Línea ofensiva
+OG|Guardia ofensiva|Línea ofensiva
+
+- EQUIPOS -
+id|name|chmp|conf_id|div
+BUF|Bills|0|AFC|Este
+IND|Colts|2|AFC|Sur
+MIA|Dolphins|2|AFC|Este
+TB|Buccaneers|2|NFC|Sur
+PIT|Steelers|6|AFC|Norte
+KC|Chiefs|3|AFC|Oeste
+PHI|Eagles|1|NFC|Este
+BLT|Ravens|2|AFC|Norte
+CIN|Bengals|0|AFC|Norte
+CHI|Bears|1|AFC|Norte
+GB|Packers|4|NFC|Norte
+MIN|Vikings|0|NFC|Norte
+LAC|Chargers|0|AFC|Oeste
+SF|49ers|0|NFC|Oeste
+CLV|Browns|0|AFC|Norte
+LV|Raiders|3|AFC|Oeste
+NE|Patriots|6|AFC|Este
+DEN|Broncos|3|AFC|Oeste
+SEA|Seahawks|1|NFC|Oeste
+
+- JUGADORES -
+name|bd|height|weight|number|pos_id|team_id|in_yr
+Josh Allen|1996-05-21|1.96|108|17|QB|BUF|2018
+Steffon Diggs|1993-11-29|1.83|88|14|WR|BUF|2020
+John Unitas|1933-05-07|1.85|88|-1|QB|LAC|1973
+Raheem Mostert|1992-04-09|1.78|89|31|RB|MIA|2022
+Antonio Brown|1988-07-10|1.78|84|-1|WR|TB|2020
+Patrick Mahomes|1995-09-17|1.88|102|15|QB|KC|2017
+Travis Kelce|1989-10-05|1.96|113|87|TE|KC|2013
+Jason Kelce|1987-11-05|1.91|128|62|C|PHI|2011
+Justin Tucker|1989-11-21|1.85|82|9|K|BLT|2012
+AJ Dillon|1998-05-02|1.83|112|28|RB|GB|2020
+
+- EQUIPOS_PASADOS -
+name|team_id|in_yr|out_yr
+Steffon Diggs|MIN|2015|2019
+John Unitas|PIT|1955|1955
+John Unitas|IND|1956|1972
+Raheem Mostert|SF|2016|2021
+Raheem Mostert|CHI|2016|2016
+Raheem Mostert|CLV|2015|2015
+Raheem Mostert|BLT|2015|2015
+Antonio Brown|PIT|2010|2018
+Antonio Brown|LV|2019|2019
+Antonio Brown|NE|2019|2019
+
+- PARTIDOS -
+winner|loser|tmp_year|spbwl
+KC|PHI|2022|1
+BUF|LAC|2022|0
+CHI|SF|2022|0
+PIT|CIN|2022|0
+MIN|GB|2022|0
+BLT|BUF|2018|0
+KC|SF|2019|1
+LAC|CIN|2021|1
+SEA|DEN|2013|1
+PHI|NE|2017|1
+
+- ESTADOS -
+id|name
+NY|Nueva York
+IN|Indianápolis
+FL|Florida
+PA|Pensilvania
+KS|Kansas
+MD|Maryland
+OH|Ohio
+IL|Illinois
+MN|Minesota
+MO|Misuri
+CA|California
+NV|Nevada
+CO|Colorado
+WA|Washington
+WI|Wisconsin
+MA|Massachusetts
+
+- CASAS -
+state_id|team_id|munc
+NY|BUF|Búfalo
+IN|IND|Indianápolis
+FL|MIA|Miami
+FL|TB|Tampa Bay
+PA|PIT|Pittsburgh
+MO|KC|Kansas City
+NY|PHI|Filadelfia
+MD|BLT|Baltimore
+OH|CIN|Cincinnati
+IL|CHI|Chicago
+WI|GB|Green Bay
+MN|MIN|Minesota
+CA|LAC|Los Ángeles
+CA|SF|San Francisco
+OH|CLV|Cleveland
+NV|LV|Las Vegas
+MA|NE|Foxborough
+CO|DEN|Denver
+WA|SEA|Seattle

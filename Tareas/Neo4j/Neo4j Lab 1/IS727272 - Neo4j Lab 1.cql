@@ -273,7 +273,7 @@ MERGE (s)-[r:CASA_DE {municipalidad: 'Baltimore'}]->(e);
 MATCH (s:Estado {id: 'OH'}), (e:Equipo {id: 'CIN'})
 MERGE (s)-[r:CASA_DE {municipalidad: 'Cincinnati'}]->(e);
 MATCH (s:Estado {id: 'IL'}), (e:Equipo {id: 'CHI'})
-MERGE (s)-[r:CASA_DE {municipalidad: 'Chicado'}]->(e);
+MERGE (s)-[r:CASA_DE {municipalidad: 'Chicago'}]->(e);
 MATCH (s:Estado {id: 'WI'}), (e:Equipo {id: 'GB'})
 MERGE (s)-[r:CASA_DE {municipalidad: 'Green Bay'}]->(e);
 MATCH (s:Estado {id: 'MN'}), (e:Equipo {id: 'MIN'})
