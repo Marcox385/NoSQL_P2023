@@ -41,4 +41,4 @@ RETURN s, r, e; // Sí usa el índice
 
 // player_name_idx
 CALL db.index.fulltext.queryNodes("player_name_idx", "kelce") YIELD node, score
-RETURN node.title, node.description, score;
+RETURN node.nombre, score;
