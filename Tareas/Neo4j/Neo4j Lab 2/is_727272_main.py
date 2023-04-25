@@ -59,7 +59,7 @@ class NFLStats(object):
 
     def init(self, source):
         start = time.time() # Starting time of operations
-        self._generic_write_tx(self.transactions['DELETE_ALL']) # Uncomment for initial data deletion
+        # self._generic_write_tx(self.transactions['DELETE_ALL']) # Uncomment for initial data deletion
         with open(source, newline='') as f:
             contents = f.readlines()
             segment_type = ''
