@@ -12,7 +12,7 @@ CREATE (a:Station {name: 'Kings Cross',         latitude: 51.5308, longitude: -0
 
 // Proyecto local de GDS
 CALL gds.graph.project(
-    'myGraph',
+    'lab3_demo',
     'Station',
     'CONNECTION',
     {
@@ -23,7 +23,7 @@ CALL gds.graph.project(
 
 // Cálculo de costo en memoria para el algoritmo A*
 MATCH (source:Station {name: 'Kings Cross'}), (target:Station {name: 'Kentish Town'})
-CALL gds.shortestPath.astar.write.estimate('myGraph', {
+CALL gds.shortestPath.astar.write.estimate('lab3_demo', {
     sourceNode: source,
     targetNode: target,
     latitudeProperty: 'latitude',
@@ -35,7 +35,7 @@ RETURN nodeCount, relationshipCount, bytesMin, bytesMax, requiredMemory;
 
 // Aplicación del algoritmo A*
 MATCH (source:Station {name: 'Kings Cross'}), (target:Station {name: 'Kentish Town'})
-CALL gds.shortestPath.astar.stream('myGraph', {
+CALL gds.shortestPath.astar.stream('lab3_demo', {
     sourceNode: source,
     targetNode: target,
     latitudeProperty: 'latitude',
@@ -59,4 +59,4 @@ CREATE (f:Station {name: 'Tlaquepaque', latitude: 20.64091, longitude: -103.2932
 MATCH (c:Station {name: 'Camden Town'}),
       (d:Station {name: 'Mornington Crescent'}),
       (f:Station {name: 'Tlaquepaque'})
-MERGE (c)-[:CONNECTION {distance: 0.9}]->(f)<-[:CONNECTION {distance: 0.8}]-(d);
+MERGE (f)-[:CONNECTION {distance: 0.9}]->(c)-[:CONNECTION {distance: 0.9}]->(f)<-[:CONNECTION {distance: 0.8}]-(d);
