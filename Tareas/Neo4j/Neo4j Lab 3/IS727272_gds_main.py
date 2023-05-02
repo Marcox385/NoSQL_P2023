@@ -44,7 +44,7 @@ with driver.session() as session:
     """
     )
 
-    # # Creación del proyecto
+    # Creación del proyecto
     G_stations, project_result = gds.graph.project(
         'lab3_demo_py',
         {'Station': {'properties': ['latitude', 'longitude']}},
@@ -53,6 +53,16 @@ with driver.session() as session:
 
     source_id = gds.find_node_id(['Station'], {'name': 'Kings Cross'})
     target_id = gds.find_node_id(['Station'], {'name': 'Tlaquepaque'})
+
+    print(gds.shortestPath.astar.stream.estimate(
+            G = G_stations,
+            sourceNode = source_id,
+            targetNode = target_id,
+            latitudeProperty = 'latitude',
+            longitudeProperty = 'longitude',
+            relationshipWeightProperty = 'distance'
+        )
+    )
 
     print(gds.shortestPath.astar.stream(
             G = G_stations,
