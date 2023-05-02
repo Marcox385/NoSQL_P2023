@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # IS727272 - Cordero Hernández, Marco Ricardo
 from neo4j import GraphDatabase
+from neo4j.exceptions import ClientError
 from graphdatascience import GraphDataScience
 
 URI = 'bolt://localhost:7687'
@@ -19,10 +20,13 @@ with driver.session() as session:
         DETACH DELETE n
     ''')
 
-    gds.run_cypher('''
-        CALL gds.graph.drop('lab3_demo_py')
-        YIELD graphName
-    ''')
+    try:
+        gds.run_cypher('''
+            CALL gds.graph.drop('lab3_demo_py')
+            YIELD graphName
+        ''')
+    except ClientError:
+        pass
 
     # Creación de nodos
     gds.run_cypher(
