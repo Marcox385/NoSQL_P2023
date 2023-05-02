@@ -52,3 +52,11 @@ RETURN
     costs,
     nodes(path) as path
 ORDER BY index;
+
+// Nodo y relaciones adicionales
+CREATE (f:Station {name: 'Tlaquepaque', latitude: 20.64091, longitude: -103.29327});
+
+MATCH (c:Station {name: 'Camden Town'}),
+      (d:Station {name: 'Mornington Crescent'}),
+      (f:Station {name: 'Tlaquepaque'})
+MERGE (c)-[:CONNECTION {distance: 0.9}]->(f)<-[:CONNECTION {distance: 0.8}]-(d);
