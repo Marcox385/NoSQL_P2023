@@ -94,12 +94,14 @@ class TravelPredictor(object):
             end_date = ''
 
             if (start):
+                if ('/' in start): start = start.replace('/', '-')
                 start_date = list(map(lambda x: x.lstrip('0'), start.split('-')))
                 start_date = '{' + f'year: {start_date[2]}, month: {start_date[1]}, day: {start_date[0]}' + '}'
                 start_date = f' AND t.date >= date({start_date})'
                 start = f'starting from {start} '
             
             if (end):
+                if ('/' in end): end = end.replace('/', '-')
                 end_date = list(map(lambda x: x.lstrip('0'), end.split('-')))
                 end_date = '{' + f'year: {end_date[2]}, month: {end_date[1]}, day: {end_date[0]}' + '}'
                 end_date = f' AND t.date <= date({end_date})'
