@@ -1,0 +1,101 @@
+airline,from,to,day,month,year,age,gender,reason,stay,transit,connection,wait
+Volaris,PDX,LAX,3,3,2016,23,unspecified,Back Home,Home,Own car,False,0
+Alaska,SJC,LAX,5,6,2022,87,undisclosed,On vacation/Pleasure,Home,,True,119
+Volaris,GDL,LAX,29,4,2016,76,male,On vacation/Pleasure,Hotel,Own car,False,0
+Alaska,LAX,JFK,16,6,2021,35,female,On vacation/Pleasure,Home,,True,182
+American Airlines,GDL,SJC,14,1,2016,61,unspecified,Business/Work,Home,,True,59
+Delta Airlines,GDL,LAX,20,4,2013,89,unspecified,On vacation/Pleasure,Home,Airport cab,False,0
+Volaris,LAX,PDX,1,11,2018,35,undisclosed,On vacation/Pleasure,Hotel,Own car,False,0
+Delta Airlines,PDX,GDL,12,1,2022,7,undisclosed,Back Home,Home,Own car,False,0
+Volaris,LAX,SJC,26,3,2015,14,female,Business/Work,Short-term homestay,,True,274
+Volaris,GDL,JFK,14,9,2013,33,undisclosed,Back Home,Home,Car rental,False,0
+Volaris,SJC,PDX,3,10,2019,63,male,On vacation/Pleasure,Short-term homestay,Mobility as a service,False,0
+Alaska,GDL,LAX,5,8,2017,59,male,Back Home,Home,Own car,False,0
+Volaris,SJC,GDL,12,3,2015,27,unspecified,On vacation/Pleasure,Short-term homestay,Airport cab,False,0
+Alaska,JFK,PDX,8,2,2020,70,undisclosed,On vacation/Pleasure,Hotel,,True,188
+American Airlines,GDL,JFK,5,8,2016,27,unspecified,On vacation/Pleasure,Friend/Family,Airport cab,False,0
+Alaska,PDX,SJC,29,4,2018,72,undisclosed,Back Home,Home,,False,0
+Delta Airlines,SJC,LAX,4,1,2020,12,undisclosed,Back Home,Home,Public Transportation,False,0
+Delta Airlines,LAX,SJC,28,8,2019,70,unspecified,Back Home,Home,Airport cab,False,0
+Volaris,GDL,LAX,19,12,2020,35,unspecified,Business/Work,Hotel,,True,157
+Volaris,SJC,PDX,15,12,2021,59,male,Business/Work,Home,,True,131
+Delta Airlines,PDX,GDL,18,10,2021,46,unspecified,Business/Work,Home,Pickup,False,0
+Delta Airlines,LAX,JFK,31,3,2020,78,unspecified,Business/Work,Friend/Family,Pickup,False,0
+Alaska,PDX,SJC,6,8,2015,36,undisclosed,Business/Work,Hotel,,True,397
+American Airlines,LAX,PDX,5,9,2020,22,male,Business/Work,Friend/Family,,True,298
+Alaska,PDX,LAX,5,11,2017,79,unspecified,Business/Work,Short-term homestay,,True,351
+Volaris,LAX,JFK,28,7,2015,11,undisclosed,Back Home,Home,,False,0
+Volaris,LAX,PDX,8,2,2013,2,female,Back Home,Home,,False,0
+Alaska,LAX,SJC,29,10,2015,69,undisclosed,Back Home,Home,,False,0
+American Airlines,PDX,JFK,22,2,2015,69,undisclosed,Back Home,Home,Public Transportation,False,0
+Aeromexico,LAX,JFK,9,8,2018,23,undisclosed,On vacation/Pleasure,Short-term homestay,Own car,False,0
+American Airlines,GDL,PDX,17,4,2017,55,unspecified,On vacation/Pleasure,Home,Public Transportation,False,0
+Volaris,LAX,JFK,14,10,2020,86,male,Back Home,Home,Own car,False,0
+American Airlines,JFK,SJC,7,11,2017,41,female,Back Home,Home,Own car,False,0
+American Airlines,LAX,PDX,18,9,2022,85,female,Back Home,Home,Pickup,False,0
+Alaska,GDL,PDX,21,7,2016,29,unspecified,Back Home,Home,,False,0
+Aeromexico,SJC,LAX,18,2,2023,80,undisclosed,Back Home,Home,,False,0
+American Airlines,SJC,JFK,28,3,2016,80,unspecified,Business/Work,Friend/Family,,True,599
+American Airlines,PDX,GDL,15,8,2013,15,undisclosed,Back Home,Home,,False,0
+American Airlines,JFK,PDX,17,1,2018,3,female,Business/Work,Friend/Family,Mobility as a service,False,0
+Aeromexico,LAX,PDX,8,9,2016,63,female,Business/Work,Home,,True,346
+Aeromexico,GDL,LAX,15,4,2014,22,male,Back Home,Home,Mobility as a service,False,0
+Delta Airlines,JFK,LAX,4,12,2020,79,female,On vacation/Pleasure,Hotel,Pickup,False,0
+Aeromexico,LAX,SJC,10,7,2020,46,female,Back Home,Home,,False,0
+Volaris,PDX,SJC,4,10,2018,27,female,On vacation/Pleasure,Hotel,Mobility as a service,False,0
+Aeromexico,LAX,JFK,15,6,2013,11,unspecified,Business/Work,Friend/Family,Pickup,False,0
+Volaris,GDL,PDX,22,5,2019,26,unspecified,Back Home,Home,Mobility as a service,False,0
+Volaris,JFK,GDL,12,12,2014,39,male,On vacation/Pleasure,Short-term homestay,,True,570
+Aeromexico,PDX,GDL,28,2,2020,54,female,Business/Work,Hotel,,True,529
+Alaska,LAX,GDL,6,12,2013,33,male,Back Home,Home,Own car,False,0
+Delta Airlines,LAX,GDL,21,12,2014,83,male,On vacation/Pleasure,Short-term homestay,Airport cab,False,0
+Alaska,LAX,GDL,22,10,2021,41,female,Back Home,Home,Own car,False,0
+Aeromexico,LAX,JFK,8,6,2022,66,female,On vacation/Pleasure,Hotel,,True,228
+Delta Airlines,SJC,JFK,3,9,2020,39,undisclosed,On vacation/Pleasure,Home,Car rental,False,0
+American Airlines,PDX,SJC,23,3,2020,68,female,On vacation/Pleasure,Hotel,Car rental,False,0
+Alaska,SJC,LAX,26,3,2017,21,undisclosed,Business/Work,Home,Pickup,False,0
+American Airlines,JFK,SJC,6,5,2015,50,unspecified,Business/Work,Hotel,,True,119
+American Airlines,JFK,GDL,6,1,2022,38,undisclosed,On vacation/Pleasure,Friend/Family,,True,452
+American Airlines,LAX,SJC,25,12,2013,62,female,Back Home,Home,Public Transportation,False,0
+Alaska,JFK,LAX,8,5,2018,49,male,On vacation/Pleasure,Hotel,Public Transportation,False,0
+Alaska,LAX,PDX,2,10,2018,18,unspecified,Back Home,Home,,False,0
+Aeromexico,SJC,LAX,26,6,2013,11,undisclosed,Business/Work,Home,Mobility as a service,False,0
+American Airlines,JFK,PDX,3,2,2017,12,undisclosed,On vacation/Pleasure,Short-term homestay,,True,210
+Delta Airlines,LAX,JFK,24,6,2016,55,male,Business/Work,Home,Mobility as a service,False,0
+Delta Airlines,GDL,JFK,24,11,2019,20,undisclosed,On vacation/Pleasure,Short-term homestay,Airport cab,False,0
+Alaska,PDX,GDL,12,12,2016,49,undisclosed,On vacation/Pleasure,Short-term homestay,Car rental,False,0
+Aeromexico,SJC,GDL,28,10,2018,57,female,Back Home,Home,,False,0
+Delta Airlines,LAX,JFK,2,12,2014,85,female,On vacation/Pleasure,Home,Airport cab,False,0
+Aeromexico,GDL,LAX,15,2,2015,28,female,Back Home,Home,,False,0
+Delta Airlines,JFK,SJC,16,3,2017,10,female,On vacation/Pleasure,Home,Mobility as a service,False,0
+Delta Airlines,GDL,LAX,5,2,2022,81,male,On vacation/Pleasure,Short-term homestay,,True,379
+American Airlines,LAX,JFK,11,9,2015,2,female,Back Home,Home,Car rental,False,0
+Volaris,JFK,GDL,25,1,2020,19,male,Business/Work,Home,,True,434
+Delta Airlines,SJC,PDX,4,3,2014,14,undisclosed,Business/Work,Short-term homestay,,True,586
+Aeromexico,PDX,GDL,12,6,2013,67,male,Back Home,Home,Mobility as a service,False,0
+Delta Airlines,GDL,LAX,28,7,2021,52,unspecified,On vacation/Pleasure,Short-term homestay,,True,297
+Volaris,SJC,PDX,29,3,2018,29,unspecified,Back Home,Home,Pickup,False,0
+Delta Airlines,LAX,GDL,9,4,2021,90,undisclosed,On vacation/Pleasure,Hotel,,True,518
+American Airlines,PDX,SJC,26,5,2014,59,female,Back Home,Home,,False,0
+Alaska,GDL,JFK,22,12,2020,58,undisclosed,Back Home,Home,Public Transportation,False,0
+Alaska,GDL,JFK,13,7,2019,86,male,Back Home,Home,Car rental,False,0
+Alaska,PDX,JFK,6,4,2020,42,unspecified,Back Home,Home,Mobility as a service,False,0
+American Airlines,JFK,LAX,3,6,2015,59,male,Back Home,Home,,False,0
+Aeromexico,SJC,GDL,4,4,2013,5,undisclosed,Business/Work,Short-term homestay,,True,475
+Volaris,GDL,PDX,28,5,2015,85,undisclosed,Business/Work,Home,Airport cab,False,0
+Volaris,PDX,SJC,2,10,2022,8,undisclosed,On vacation/Pleasure,Short-term homestay,Car rental,False,0
+Delta Airlines,PDX,LAX,23,5,2021,23,male,Business/Work,Friend/Family,,True,326
+American Airlines,GDL,SJC,3,10,2019,30,male,On vacation/Pleasure,Friend/Family,Pickup,False,0
+Alaska,JFK,GDL,12,8,2013,27,unspecified,Business/Work,Hotel,Own car,False,0
+Aeromexico,SJC,PDX,30,5,2013,54,female,Back Home,Home,Mobility as a service,False,0
+American Airlines,LAX,GDL,10,12,2018,38,unspecified,On vacation/Pleasure,Hotel,,True,395
+Aeromexico,GDL,SJC,22,8,2013,38,unspecified,On vacation/Pleasure,Friend/Family,Airport cab,False,0
+Alaska,JFK,GDL,26,6,2019,81,unspecified,Back Home,Home,Mobility as a service,False,0
+Aeromexico,PDX,JFK,24,3,2014,24,unspecified,Back Home,Home,,False,0
+Delta Airlines,SJC,PDX,3,12,2013,12,undisclosed,On vacation/Pleasure,Short-term homestay,Car rental,False,0
+Volaris,SJC,JFK,14,5,2014,51,female,On vacation/Pleasure,Friend/Family,,True,246
+Alaska,SJC,JFK,28,4,2013,90,unspecified,Business/Work,Hotel,Mobility as a service,False,0
+Volaris,GDL,SJC,31,5,2013,85,unspecified,Business/Work,Short-term homestay,,True,144
+Volaris,SJC,JFK,27,8,2022,72,unspecified,On vacation/Pleasure,Short-term homestay,,True,335
+American Airlines,PDX,SJC,3,2,2016,49,male,Business/Work,Friend/Family,,True,303
+American Airlines,PDX,JFK,16,10,2017,58,undisclosed,Back Home,Home,,False,0

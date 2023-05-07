@@ -11,8 +11,8 @@ import datetime
 from random import choice, randint, randrange
 
 
-airlines = ["American Airlines", "Delta Airlines", "Alaska", "Aeromexico", "Volaris"]
-airports = ["PDX", "GDL", "SJC", "LAX", "JFK"]
+airlines = ["American Airlines", "Delta Airlines", "Alaska", "Aeromexico", "Volaris", "Viva Aerobus", "Aeromar", "Lufthansa"]
+airports = ["PDX", "GDL", "SJC", "LAX", "JFK", "TPQ", "IZT", "PVR", "MTY", "TLC", "DEN"]
 genders = ["male", "female", "unspecified", "undisclosed"]
 reasons = ["On vacation/Pleasure", "Business/Work", "Back Home"]
 stays = ["Hotel", "Short-term homestay", "Home", "Friend/Family"]
