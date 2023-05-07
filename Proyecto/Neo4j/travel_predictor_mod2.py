@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ''' Modelo 2: Modelo que recomienda en qué aeropuertos es
 recomendable abrir servicios de alimentos/bebidas '''
-import os, time, argparse
+import os, argparse
 
 from neo4j import GraphDatabase
 from graphdatascience import GraphDataScience
@@ -126,6 +126,7 @@ class TravelPredictor(object):
                 print(f'{i} - Airport ID: {r[0]}\n\t- Connections: {r[1]}\n\t- Waiting time average per connection: {r[2]:.2f} minutes\n')
 
     def stats(self, links:bool=False, centrality:bool=False):
+        ''' Call GDS Algorithm for node inspection '''
         with self.driver.session() as session:
             gds = GraphDataScience(self._uri, auth=self._AUTH)
 
