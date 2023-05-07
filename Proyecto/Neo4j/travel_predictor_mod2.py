@@ -98,14 +98,14 @@ class TravelPredictor(object):
                 start_date = list(map(lambda x: x.lstrip('0'), start.split('-')))
                 start_date = '{' + f'year: {start_date[2]}, month: {start_date[1]}, day: {start_date[0]}' + '}'
                 start_date = f' AND t.date >= date({start_date})'
-                start = f'starting from {start} '
+                start = f'desde {start} '
             
             if (end):
                 if ('/' in end): end = end.replace('/', '-')
                 end_date = list(map(lambda x: x.lstrip('0'), end.split('-')))
                 end_date = '{' + f'year: {end_date[2]}, month: {end_date[1]}, day: {end_date[0]}' + '}'
                 end_date = f' AND t.date <= date({end_date})'
-                end = f'up to {end} '
+                end = f'hasta {end} '
             
             try:
                 top = int(top)
@@ -122,10 +122,10 @@ class TravelPredictor(object):
 
             results = session.execute_read(inner_tx, top, reverse, start_date, end_date)
             
-            print(f'The top {top} most suitable airports to open more establishments '
-                + (start if start else '') + (end if end else '') + 'are the following')
+            print(f'El top {top} de aeropuertos con posibilidad de apertura de establecimientos '
+                + (start if start else '') + (end if end else '') + 'son los siguientes')
             for i, r in enumerate(results, 1):
-                print(f'{i} - Airport ID: {r[0]}\n\t- Connections: {r[1]}\n\t- Waiting time average per connection: {r[2]:.2f} minutes\n')
+                print(f'{i} - ID de Aeropuerto: {r[0]}\n\t- Conexiones: {r[1]}\n\t- Promedio de tiempo de espera por conexión: {r[2]:.2f} minutes\n')
 
     def stats(self, links:bool=False, centrality:bool=False):
         ''' Call GDS Algorithm for node inspection '''
@@ -181,32 +181,32 @@ if __name__ == "__main__":
 
     actions = ['fill', 'predict', 'stats']
     parser.add_argument('action', choices=actions,
-            help='Available application actions')
+            help='Acciones disponibles')
     parser.add_argument('-f', '--file',
-            help='Dataset for database filling (csv format)', default=None)
+            help='Set de datos para el llenado de la base (formato csv)', default=None)
     parser.add_argument('-t', '--top',
-            help='Limit results to [top] records', default=5)
+            help='Limitar resultados a la cota superior [top]', default=5)
     parser.add_argument('-r', '--reverse',
-            help='Reverse sorting order of (Waiting avg, Connection amount) factor', default=False)
+            help='Invertir factores de ordenamiento (Waiting avg, Connection amount)', default=False)
     parser.add_argument('-s', '--start',
-            help='Starting date in format (dd-mm-yyy)', default=None)
+            help='Fecha inicio en el formato (dd-mm-aaaa)', default=None)
     parser.add_argument('-e', '--end',
-            help='Ending date in format (dd-mm-yyy)', default=None)
+            help='Fecha final en el formato (dd-mm-aaaa)', default=None)
     parser.add_argument('-l', '--links',
-            help='Execute Page Rank algorithm for link between aiports', default=False)
+            help='Ejecutar algoritmo Page Rank para vinculos entre aeropuertos', default=False)
     parser.add_argument('-c', '--centrality',
-            help='Execute Closeness Centrality algorithm for node inspection', default=False)
+            help='Ejecutar algoritmo Closeness Centrality para inspección de nodos', default=False)
 
     args = parser.parse_args()
     tp = TravelPredictor(neo4j_uri, neo4j_user, neo4j_password)
 
     if args.action == 'fill':
         if (not args.file):
-            print('Filling file not provided. Try again.')
+            print('Archivo de entrada faltante. Intenta de nuevo.')
             exit(1)
         
         if ('.csv' not in args.file):
-            print('Incorrect file format')
+            print('Formato de archivo incorrecto.')
             exit(1)
 
         tp.fill(args.file)
