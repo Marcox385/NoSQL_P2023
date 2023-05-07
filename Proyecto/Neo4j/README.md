@@ -14,12 +14,12 @@ Modelo 2: Modelo que recomienda en qué aeropuertos es recomendable abrir servic
 
 #### Preparativos
 ```bash
-# Instalar ambiente virtual
+# Instalar ambiente virtual y activarlo
 python3 -m pip install virtualenv
 virtualenv -p python3 ./venv
 source ./venv/bin/activate
 
-# Install project python requirements
+# Instalar módulos desde archivos de requerimientos
 python3 -m pip install -r requirements.txt
 ```
 

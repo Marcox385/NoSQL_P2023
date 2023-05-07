@@ -73,8 +73,21 @@ class TravelPredictor(object):
                 self._generic_write_tx(self.transactions['Travel'], id_from=curr_data['from'],
                     id_to=curr_data['to'], date=date, connection=curr_data['connection'],wait=int(curr_data['wait']))
 
-    def search_range(self, start='', end=''):
-        def inner_tx(tx, start, end):
+    def search_range(self, top:int=5, reverse:bool=False, start:str='', end:str=''):
+        '''
+            Search nodes between a start and end date to predict viability
+            of new stores in airports
+        '''
+        def inner_tx(tx, limit, order, start_date, end_date):
+            limit = f' LIMIT {limit}' if limit else ''
+            order = ' ORDER BY ' +  ('WAIT_AVG, CONNECTIONS' if not order else 'CONNECTIONS, WAIT_AVG') + ' DESC'
+
+            result = tx.run('MATCH (org:Airport)-[t:TRAVEL]->(dest:Airport) WHERE t.connection = "True"'
+                + start_date + end_date + ' RETURN org.id as ORIGIN, COUNT(dest) AS CONNECTIONS, avg(t.wait) AS WAIT_AVG'
+                + order + limit)
+            return [record.values() for record in result]
+        
+        with self.driver.session() as session:
             start_date = ''
             end_date = ''
 
@@ -82,22 +95,32 @@ class TravelPredictor(object):
                 start_date = list(map(lambda x: x.lstrip('0'), start.split('-')))
                 start_date = '{' + f'year: {start_date[2]}, month: {start_date[1]}, day: {start_date[0]}' + '}'
                 start_date = f' AND t.date >= date({start_date})'
+                start = f'starting from {start} '
             
             if (end):
-                end_date = end.split('-')
+                end_date = list(map(lambda x: x.lstrip('0'), end.split('-')))
                 end_date = '{' + f'year: {end_date[2]}, month: {end_date[1]}, day: {end_date[0]}' + '}'
                 end_date = f' AND t.date <= date({end_date})'
-
-            result = tx.run('MATCH (org:Airport)-[t:TRAVEL]->(dest:Airport) WHERE t.connection = "True"'
-                + start_date + end_date + ' RETURN org.id as ORIGIN, COUNT(dest) AS CONNECTIONS, avg(t.wait) AS WAIT_AVG'
-                + ' ORDER BY WAIT_AVG, CONNECTIONS DESC')
-            return [record.values() for record in result]
-        
-        with self.driver.session() as session:
-            results = session.execute_read(inner_tx, start, end)
+                end = f'up to {end} '
             
-            print('The most suitable airports to open more establishments are the following')
-            for i, r in enumerate(results[:5], 1):
+            try:
+                top = int(top)
+
+                if (top <= 0):
+                    raise ValueError
+            except ValueError:
+                top = 5
+
+            try:
+                reverse = bool(reverse)
+            except ValueError:
+                reverse = False
+
+            results = session.execute_read(inner_tx, top, reverse, start_date, end_date)
+            
+            print(f'The top {top} most suitable airports to open more establishments '
+                + (start if start else '') + (end if end else '') + 'are the following')
+            for i, r in enumerate(results, 1):
                 print(f'{i} - Airport ID: {r[0]}\n\t- Connections: {r[1]}\n\t- Waiting time average per connection: {r[2]:.2f} minutes\n')
 
     def close(self):
@@ -120,6 +143,10 @@ if __name__ == "__main__":
             help='Available application actions')
     parser.add_argument('-f', '--file',
             help='Dataset for database filling (csv format)', default=None)
+    parser.add_argument('-t', '--top',
+            help='Limit results to [top] records', default=5)
+    parser.add_argument('-r', '--reverse',
+            help='Reverse sorting order of (Waiting avg, Connection amount) factor', default=False)
     parser.add_argument('-s', '--start',
             help='Starting date in format (dd-mm-yyy)', default=None)
     parser.add_argument('-e', '--end',
@@ -129,10 +156,6 @@ if __name__ == "__main__":
     tp = TravelPredictor(neo4j_uri, neo4j_user, neo4j_password)
 
     if args.action == 'fill':
-        if (args.start or args.end):
-            print('Invalid arguments combination.')
-            exit(1)
-
         if (not args.file):
             print('Filling file not provided. Try again.')
             exit(1)
@@ -143,4 +166,4 @@ if __name__ == "__main__":
 
         tp.fill(args.file)
     elif args.action == 'predict':
-        tp.search_range(start=args.start,end=args.end)
+        tp.search_range(top=args.top, reverse=args.reverse, start=args.start,end=args.end)
