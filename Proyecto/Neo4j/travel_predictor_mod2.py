@@ -10,7 +10,9 @@ from neo4j.exceptions import ClientError, ConstraintError
 class TravelPredictor(object):
 
     def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+        self._uri = uri
+        self._AUTH = (user, password)
+        self.driver = GraphDatabase.driver(self._uri, auth=self._AUTH)
         self._create_constraints()
 
         self.transactions = {
@@ -123,6 +125,42 @@ class TravelPredictor(object):
             for i, r in enumerate(results, 1):
                 print(f'{i} - Airport ID: {r[0]}\n\t- Connections: {r[1]}\n\t- Waiting time average per connection: {r[2]:.2f} minutes\n')
 
+    def stats(self, links:bool=False, centrality:bool=False):
+        with self.driver.session() as session:
+            gds = GraphDataScience(self._uri, auth=self._AUTH)
+
+            try:
+                gds.run_cypher("CALL gds.graph.drop('mod2_page_rank')")
+                gds.run_cypher("CALL gds.graph.drop('mod2_centrality')")
+            except ClientError:
+                pass
+
+            if (links):
+                G_mod2_pr, _ = gds.graph.project(
+                    'mod2_page_rank',
+                    'Airport',
+                    {'TRAVEL': {'properties': ['wait']}}
+                )
+
+                pr_results = gds.pageRank.stream(G = G_mod2_pr)
+                print('-- PAGE RANK --')
+                for node_id, score in zip(pr_results.nodeId, pr_results.score):
+                    print(f'Aeropuerto: {gds.util.asNode(node_id)._properties["id"]} - Puntuación: {score}')
+
+            if (links and centrality): print()
+
+            if (centrality):
+                G_mod2_cent, _ = gds.graph.project(
+                    'mod2_centrality',
+                    'Airport',
+                    'TRAVEL'
+                )
+
+                pr_results = gds.beta.closeness.stream(G = G_mod2_cent)
+                print('-- CENTRALITY --')
+                for node_id, score in zip(pr_results.nodeId, pr_results.score):
+                    print(f'Aeropuerto: {gds.util.asNode(node_id)._properties["id"]} - Puntuación: {score}')
+
     def close(self):
         ''' Close Neo4j instance '''
         self.driver.close()
@@ -138,7 +176,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    actions = ['fill', 'predict']
+    actions = ['fill', 'predict', 'stats']
     parser.add_argument('action', choices=actions,
             help='Available application actions')
     parser.add_argument('-f', '--file',
@@ -151,6 +189,10 @@ if __name__ == "__main__":
             help='Starting date in format (dd-mm-yyy)', default=None)
     parser.add_argument('-e', '--end',
             help='Ending date in format (dd-mm-yyy)', default=None)
+    parser.add_argument('-l', '--links',
+            help='Execute Page Rank algorithm for link between aiports', default=False)
+    parser.add_argument('-c', '--centrality',
+            help='Execute Closeness Centrality algorithm for node inspection', default=False)
 
     args = parser.parse_args()
     tp = TravelPredictor(neo4j_uri, neo4j_user, neo4j_password)
@@ -167,3 +209,5 @@ if __name__ == "__main__":
         tp.fill(args.file)
     elif args.action == 'predict':
         tp.search_range(top=args.top, reverse=args.reverse, start=args.start,end=args.end)
+    elif args.action == 'stats':
+        tp.stats(args.links, args.centrality)
