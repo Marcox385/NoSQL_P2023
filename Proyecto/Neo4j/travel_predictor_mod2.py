@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ''' Modelo 2: Modelo que recomienda en qué aeropuertos es
 recomendable abrir servicios de alimentos/bebidas '''
-import os, argparse
+import argparse, os, sys
 
 from neo4j import GraphDatabase
 from graphdatascience import GraphDataScience
@@ -22,6 +22,9 @@ class TravelPredictor(object):
             'Travel': '''MATCH (org:Airport {id: $id_from}), (dest:Airport {id: $id_to}) '''
                       '''MERGE (org)-[:TRAVEL {date: date($date), connection: $connection, wait: $wait}]->(dest)'''
         }
+    
+    def __enter__(self):
+        return self
 
     def _create_constraints(self):
         ''' Create constraints'''
@@ -47,6 +50,7 @@ class TravelPredictor(object):
         ''' Populate database given input dataset '''
         airlines = set()
         airports = set()
+        op_count = 1
 
         # Reset database contents
         self._generic_write_tx(self.transactions['DELETE_ALL'])
@@ -54,8 +58,9 @@ class TravelPredictor(object):
         with open(source, newline='') as csv:
             headers = csv.readline().rstrip('\r\n').split(',')
             curr_data = {}
+            lines = csv.readlines()
 
-            for line in csv.readlines():
+            for line in lines:
                 curr_data = {k:v for k, v in zip(headers, line.rstrip('\r\n').split(','))}
 
                 if (curr_data['airline'] not in airlines):
@@ -74,6 +79,11 @@ class TravelPredictor(object):
 
                 self._generic_write_tx(self.transactions['Travel'], id_from=curr_data['from'],
                     id_to=curr_data['to'], date=date, connection=curr_data['connection'],wait=int(curr_data['wait']))
+            
+                op_count += 1
+                print(f"Progreso: {op_count/len(lines):.0%}", end='\r')
+        sys.stdout.write("\033[K")
+        print('Finalizado')
 
     def search_range(self, top:int=5, reverse:bool=False, start:str='', end:str=''):
         '''
@@ -168,7 +178,7 @@ class TravelPredictor(object):
         ''' Close Neo4j instance '''
         self.driver.close()
     
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, traceback):
         ''' Object cleanup '''
         self.close()
 
@@ -198,19 +208,19 @@ if __name__ == "__main__":
             help='Execute Closeness Centrality algorithm for node inspection', default=False)
 
     args = parser.parse_args()
-    tp = TravelPredictor(neo4j_uri, neo4j_user, neo4j_password)
 
-    if args.action == 'fill':
-        if (not args.file):
-            print('Filling file not provided. Try again.')
-            exit(1)
-        
-        if ('.csv' not in args.file):
-            print('Incorrect file format')
-            exit(1)
+    with TravelPredictor(neo4j_uri, neo4j_user, neo4j_password) as tp:
+        if args.action == 'fill':
+            if (not args.file):
+                print('Filling file not provided. Try again.')
+                exit(1)
+            
+            if ('.csv' not in args.file):
+                print('Incorrect file format')
+                exit(1)
 
-        tp.fill(args.file)
-    elif args.action == 'predict':
-        tp.search_range(top=args.top, reverse=args.reverse, start=args.start,end=args.end)
-    elif args.action == 'stats':
-        tp.stats(args.links, args.centrality)
+            tp.fill(args.file)
+        elif args.action == 'predict':
+            tp.search_range(top=args.top, reverse=args.reverse, start=args.start,end=args.end)
+        elif args.action == 'stats':
+            tp.stats(args.links, args.centrality)
