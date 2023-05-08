@@ -176,6 +176,7 @@ class TravelPredictor(object):
             ]))
 
         def top_month(*args):
+            ''' Get month with most occurrence in given lists '''
             dict_holder = {}
             res_month = ''
             max_holder = 0

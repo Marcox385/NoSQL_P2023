@@ -203,7 +203,7 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--end',
             help='Fecha final en el formato (dd-mm-aaaa)', default=None)
     parser.add_argument('-l', '--links',
-            help='Ejecutar algoritmo Page Rank para vinculos entre aeropuertos', default=False)
+            help='Ejecutar algoritmo Page Rank para vínculos entre aeropuertos', default=False)
     parser.add_argument('-c', '--centrality',
             help='Ejecutar algoritmo Closeness Centrality para inspección de nodos', default=False)
 
