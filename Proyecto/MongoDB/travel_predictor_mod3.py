@@ -8,6 +8,7 @@ from datetime import datetime
 from pymongo import MongoClient
 
 class TravelPredictor(object):
+    ''' Modelo 3 '''
     def __init__(self, uri:str, target_db:str):
         self._client = MongoClient(uri)
         self.db = self._client[target_db]
@@ -21,6 +22,7 @@ class TravelPredictor(object):
         return self
 
     def _cleanup(self, collections:list):
+        ''' Database cleanup '''
         for collection in collections:
             self.db[collection].delete_many({})
 
@@ -78,12 +80,15 @@ class TravelPredictor(object):
         print('Finalizado')
 
     def _show_airports(self):
+        ''' Return all airports in the database '''
         return [a['id'] for a in self.db['airport'].aggregate([{'$project': {'_id':0, 'id':'$id'}}])]
 
     def _show_airlines(self):
+        ''' Return all airlines in the database '''
         return [a['name'] for a in self.db['airline'].find({}, {'_id':0})]
     
     def _choice_menu(self, choices:list, dec_msg:str = '', prev_msg:str = ''):
+        ''' Menu display helper '''
         try:
             dec = input(f'\n{dec_msg} [S/n]: ').upper()
         except KeyboardInterrupt:
@@ -117,7 +122,9 @@ class TravelPredictor(object):
         return selection
 
     def promotions(self, start = None, end = None):
+        ''' Predict promotions based on parameters '''
         def query(airport, airline, start, end):
+            ''' Actual query to be applied against database '''
             match_dict = {
                 '$match':
                     {
@@ -230,6 +237,7 @@ class TravelPredictor(object):
                 print('\n\tPosibilidad de descuentos por baja demanda\n\t->', ', '.join(bottom))
 
     def close(self):
+        ''' Close database connection '''
         self._client.close()
     
     def __exit__(self, exc_type, exc_value, traceback):
