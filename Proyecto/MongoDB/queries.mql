@@ -2,6 +2,16 @@
 db.[coleccion].insertMany({})
 db.[coleccion].deleteMany({})
 
+// Índices
+db.travel.createIndex({'date':1})
+db.travel.createIndex({'date':1, 'from':1})
+db.travel.createIndex({'date':1, 'airline':1})
+db.travel.createIndex({'date':1, 'from': 1, 'airline':1})
+
+db.travel.createIndex({'from':1})
+db.travel.createIndex({'airline':1})
+db.travel.createIndex({'from': 1, 'airline':1})
+
 // Obtener todos los aeropuertos
 db.airport.aggregate({'$project': {'_id':0, 'id':'$id'}})
 
@@ -16,7 +26,9 @@ db.travel.aggregate([
                 'connection': {'$ne': 'true'},
                 'stay': {'$in': ['Hotel','Short-term homestay']},
                 'reason': {'$in': ['On vacation/Pleasure','Back Home']},
-                'date': {'$gte': ISODate('2018-01-01'), '$lt': ISODate('2020-01-01')}
+                'airline': '$QUERY_AIRLINE$',
+                'from': '$QUERY_ORIGIN_AIRPORT$',
+                'date': {'$gte': ISODate('$QUERY_START_DATE$'), '$lt': ISODate('$QUERY_END_DATE$')}
             }
     },
     {
