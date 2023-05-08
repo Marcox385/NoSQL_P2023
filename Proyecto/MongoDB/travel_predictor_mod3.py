@@ -69,6 +69,7 @@ class TravelPredictor(object):
                     'airline': curr_data['airline'],
                     'from': curr_data['from'],
                     'to': curr_data['to'],
+                    'connection': True if curr_data['to'] == 'True' else False,
                     'date': date,
                     'reason': curr_data['reason'],
                     'stay': curr_data['stay']
@@ -128,6 +129,7 @@ class TravelPredictor(object):
             match_dict = {
                 '$match':
                     {
+                        'connection': {'$ne': 'true'},
                         'stay': {'$in': ['Hotel','Short-term homestay']},
                         'reason': {'$in': ['On vacation/Pleasure','Back Home']}
                     }
@@ -173,6 +175,24 @@ class TravelPredictor(object):
                 match_dict, group_dict, project_dict, sort_dict
             ]))
 
+        def top_month(*args):
+            dict_holder = {}
+            res_month = ''
+            max_holder = 0
+
+            for months in args:
+                for month in months:
+                    if (month not in dict_holder.keys()):
+                        dict_holder[month] = 0
+                    
+                    dict_holder[month] += 1
+
+                    if (dict_holder[month] > max_holder):
+                        res_month = month
+                        max_holder = dict_holder[month]
+            
+            return res_month
+
         res_str = '\nMostrando posibles ofertas\n\tParámetros:'
 
         if (start):
@@ -217,9 +237,13 @@ class TravelPredictor(object):
             print(res_str + '\n\nResultados:')
             print('\tPosibilidad de introducción de paquetes grupales o similar\n\t->', ', '.join(top))    
             print('\n\tPosibilidad de descuentos por baja demanda\n\t->', ', '.join(bottom))
+
+            if (not top == bottom):
+                print(f'\nMes con mejor posibilidad de introducción de promociones: {top_month(top, bottom)}')
         else:
             if (res_str.endswith('Parámetros:')): res_str = res_str.rstrip('Parámetros:')
             print(res_str + '\n\nResultados:', end='')
+            holder = []
 
             for airport_i in airports:
                 print(f'\nAeropuerto "{airport_i}"')
@@ -232,9 +256,13 @@ class TravelPredictor(object):
 
                 top = [self._months[r['month']] for r in res[:3]]
                 bottom = [self._months[r['month']] for r in res[-3:]]
+                holder.append(top)
+                holder.append(bottom)
 
                 print('\tPosibilidad de introducción de paquetes grupales o similar\n\t->', ', '.join(top))
                 print('\n\tPosibilidad de descuentos por baja demanda\n\t->', ', '.join(bottom))
+            
+            print(f'\nMes con mejor posibilidad de introducción de promociones: {top_month(*holder)}')
 
     def close(self):
         ''' Close database connection '''

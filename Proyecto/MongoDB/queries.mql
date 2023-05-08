@@ -13,6 +13,7 @@ db.travel.aggregate([
     {
         $match:
             {
+                'connection': {'$ne': 'true'},
                 'stay': {'$in': ['Hotel','Short-term homestay']},
                 'reason': {'$in': ['On vacation/Pleasure','Back Home']},
                 'date': {'$gte': ISODate('2018-01-01'), '$lt': ISODate('2020-01-01')}
