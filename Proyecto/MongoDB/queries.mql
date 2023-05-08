@@ -1,0 +1,44 @@
+// Limpieza inicial
+db.[coleccion].insertMany({})
+db.[coleccion].deleteMany({})
+
+// Obtener todos los aeropuertos
+db.airport.aggregate({'$project': {'_id':0, 'id':'$id'}})
+
+//
+db.travel.aggregate([
+    {
+        $match:
+            {
+                'stay': {'$in': ['Hotel','Short-term homestay']},
+                'reason': {'$in': ['On vacation/Pleasure','Back Home']}
+            }
+    },
+    {
+        $project:
+            {
+                '_id':0,
+                'From':'$from',
+                'To':'$to',
+                'Stay':'$stay',
+                'Reason':'$reason'
+            }
+    },
+    {
+        $limit: 3
+    }
+])
+
+// gwe
+db.travel.aggregate([
+    {
+        $match:
+            {
+                'stay': {'$in': ['Hotel','Short-term homestay']},
+                'reason': {'$in': ['On vacation/Pleasure','Back Home']}
+            }
+    },
+    {
+        $count: 'conteo'
+    }
+])

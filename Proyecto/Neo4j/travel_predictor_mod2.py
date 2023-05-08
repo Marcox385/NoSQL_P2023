@@ -215,7 +215,7 @@ if __name__ == "__main__":
                 print('Archivo de entrada faltante. Intenta de nuevo.')
                 exit(1)
         
-            if ('.csv' not in args.file):
+            if (not args.file.endswith('.csv')):
                 print('Formato de archivo incorrecto.')
                 exit(1)
 
