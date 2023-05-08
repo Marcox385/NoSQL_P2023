@@ -11,6 +11,10 @@ class TravelPredictor(object):
     def __init__(self, uri:str, target_db:str):
         self._client = MongoClient(uri)
         self.db = self._client[target_db]
+
+        months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+                  'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre']
+        self._months = {i:m for i, m in enumerate(months, 1)}
     
     def __enter__(self):
         ''' Context manager helper '''
@@ -79,7 +83,16 @@ class TravelPredictor(object):
     def _show_airlines(self):
         return [a['name'] for a in self.db['airline'].find({}, {'_id':0})]
     
-    def _choice_menu(self, choices:list, prev_msg:str = ''):
+    def _choice_menu(self, choices:list, dec_msg:str = '', prev_msg:str = ''):
+        try:
+            dec = input(f'\n{dec_msg} [S/n]: ').upper()
+        except KeyboardInterrupt:
+            print('\nSelección abortada')
+            return None
+        
+        if (not(not dec or dec in ('S', 'Y'))):
+            return None
+
         selection = ''
         choices = {str(i):elem for i, elem in enumerate(choices, 1)}
 
@@ -87,7 +100,12 @@ class TravelPredictor(object):
             print(prev_msg)
             for i, elem in choices.items():
                 print(f'{i} - {elem}')
-            selection = input('Selección: ')
+            
+            try:
+                selection = input('Selección: ')
+            except KeyboardInterrupt:
+                print('\nSelección abortada')
+                return None
 
             if (selection not in choices.values()):
                 if (selection in choices.keys()):
@@ -99,9 +117,61 @@ class TravelPredictor(object):
         return selection
 
     def promotions(self, start = None, end = None):
+        def query(airport, airline, start, end):
+            match_dict = {
+                '$match':
+                    {
+                        'stay': {'$in': ['Hotel','Short-term homestay']},
+                        'reason': {'$in': ['On vacation/Pleasure','Back Home']}
+                    }
+            }
+
+            group_dict = {
+                '$group':
+                    {
+                        '_id': {'$month': '$date'}, 
+                        'qty': {'$sum': 1} 
+                    }
+            }
+
+            project_dict = {
+                '$project':
+                    {
+                        '_id': 0,
+                        'month': '$_id',
+                        'qty': '$qty',
+                    }
+            }
+
+            sort_dict = {
+                '$sort': {'qty': -1}
+            }
+
+            if (airport):
+                match_dict['$match']['from'] = airport
+            
+            if (airline):
+                match_dict['$match']['airline'] = airline
+            
+            if (start):
+                match_dict['$match']['date'] = {'$gte': datetime(start, 1, 1)}
+            
+            if (end):
+                if ('date' in match_dict['$match'].keys()):
+                    match_dict['$match']['date']['$lt'] = datetime(end, 1, 1)
+                else:
+                    match_dict['$match']['date'] = {'$lt': datetime(end, 1, 1)}
+
+            return list(self.db['travel'].aggregate([
+                match_dict, group_dict, project_dict, sort_dict
+            ]))
+
+        res_str = '\nMostrando posibles ofertas\nParámetros'
+
         if (start):
             try:
                 start = int(start)
+                res_str += f'\n\t- Desde {start}'
             except ValueError:
                 print(f'Parámetro de búsqueda incorrecto ({start=}). Revisa tus entradas.')
                 exit(1)
@@ -109,18 +179,48 @@ class TravelPredictor(object):
         if (end):
             try:
                 end = int(end)
+                res_str += f'\n\t- Hasta {end}'
             except ValueError:
                 print(f'Parámetro de búsqueda incorrecto ({end=}). Revisa tus entradas.')
                 exit(1)
 
-        airport = self._choice_menu(self._show_airports(),
+        airports = self._show_airports()
+        airport = self._choice_menu(airports,
+                '¿Deseas un aeropuerto en específico',
                 'Selecciona un aeropuerto para realizar la predicción')
         
-        dec = input('\n¿Deseas una aerolínea específica? [S/n]: ').upper()
-        if (not dec or dec in ('S', 'Y')):
-            airline = self._choice_menu(self._show_airlines(),
-                    'Selecciona una aerolínea')
-        else: dec = None
+        airline = self._choice_menu(self._show_airlines(),
+                '¿Deseas una aerolínea específica?',
+                'Selecciona una aerolínea')
+    
+        if (airline):
+            res_str += f'\n\t- Aerolínea "{airline}"'
+        
+        if (airport):
+            query_res = query(airport, airline, start, end)
+
+            if (len(query_res) < 6):
+                print('No hay recomendaciones disponibles para el conjunto de parámetros actual.')
+                return
+            
+            res_str += f'\n\t- Aeropuerto "{airport}"'
+            
+            print(res_str, end='\n\n')
+            for doc in query_res:
+                pass
+        else:
+            if (res_str.endswith('Parámetros')): res_str = res_str.rstrip('Parámetros')
+            print(res_str, end='\n\n')
+
+            for airport_i in airports:
+                print(f'Aeropuerto "{airport_i}"')
+
+                res = query(airport_i, airline, start, end)
+                top = [res[:3]]
+                bottom = res[-3:]
+
+                print('\tPosibilidad de introducción de paquetes grupales o similar en mayoreo')
+                
 
     def close(self):
         self._client.close()
