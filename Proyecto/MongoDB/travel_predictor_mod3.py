@@ -166,12 +166,12 @@ class TravelPredictor(object):
                 match_dict, group_dict, project_dict, sort_dict
             ]))
 
-        res_str = '\nMostrando posibles ofertas\nParámetros'
+        res_str = '\nMostrando posibles ofertas\n\tParámetros:'
 
         if (start):
             try:
                 start = int(start)
-                res_str += f'\n\t- Desde {start}'
+                res_str += f'\n\t\t- Desde {start}'
             except ValueError:
                 print(f'Parámetro de búsqueda incorrecto ({start=}). Revisa tus entradas.')
                 exit(1)
@@ -179,7 +179,7 @@ class TravelPredictor(object):
         if (end):
             try:
                 end = int(end)
-                res_str += f'\n\t- Hasta {end}'
+                res_str += f'\n\t\t- Hasta {end}'
             except ValueError:
                 print(f'Parámetro de búsqueda incorrecto ({end=}). Revisa tus entradas.')
                 exit(1)
@@ -194,33 +194,40 @@ class TravelPredictor(object):
                 'Selecciona una aerolínea')
     
         if (airline):
-            res_str += f'\n\t- Aerolínea "{airline}"'
+            res_str += f'\n\t\t- Aerolínea "{airline}"'
         
         if (airport):
             query_res = query(airport, airline, start, end)
 
-            if (len(query_res) < 6):
+            if (not query_res):
                 print('No hay recomendaciones disponibles para el conjunto de parámetros actual.')
                 return
             
-            res_str += f'\n\t- Aeropuerto "{airport}"'
+            res_str += f'\n\t\t- Aeropuerto "{airport}"'
+            top = [self._months[r['month']] for r in query_res[:3]]
+            bottom = [self._months[r['month']] for r in query_res[-3:]]
             
-            print(res_str, end='\n\n')
-            for doc in query_res:
-                pass
+            print(res_str + '\n\nResultados:')
+            print('\tPosibilidad de introducción de paquetes grupales o similar\n\t->', ', '.join(top))    
+            print('\n\tPosibilidad de descuentos por baja demanda\n\t->', ', '.join(bottom))
         else:
-            if (res_str.endswith('Parámetros')): res_str = res_str.rstrip('Parámetros')
-            print(res_str, end='\n\n')
+            if (res_str.endswith('Parámetros:')): res_str = res_str.rstrip('Parámetros:')
+            print(res_str + '\n\nResultados:', end='')
 
             for airport_i in airports:
-                print(f'Aeropuerto "{airport_i}"')
+                print(f'\nAeropuerto "{airport_i}"')
 
                 res = query(airport_i, airline, start, end)
-                top = [res[:3]]
-                bottom = res[-3:]
-
-                print('\tPosibilidad de introducción de paquetes grupales o similar en mayoreo')
                 
+                if (not res):
+                    print('\tSin recomendaciones posibles')
+                    continue
+
+                top = [self._months[r['month']] for r in res[:3]]
+                bottom = [self._months[r['month']] for r in res[-3:]]
+
+                print('\tPosibilidad de introducción de paquetes grupales o similar\n\t->', ', '.join(top))
+                print('\n\tPosibilidad de descuentos por baja demanda\n\t->', ', '.join(bottom))
 
     def close(self):
         self._client.close()

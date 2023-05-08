@@ -5,33 +5,10 @@ db.[coleccion].deleteMany({})
 // Obtener todos los aeropuertos
 db.airport.aggregate({'$project': {'_id':0, 'id':'$id'}})
 
-// Consulta principal
-db.travel.aggregate([
-    {
-        $match:
-            {
-                'stay': {'$in': ['Hotel','Short-term homestay']},
-                'reason': {'$in': ['On vacation/Pleasure','Back Home']},
-                'date': {'$gte': ISODate('2018-01-01'), '$lt': ISODate('2020-01-01')}
-            }
-    },
-    {
-        $project:
-            {
-                '_id':0,
-                'From':'$from',
-                'To':'$to',
-                'Stay':'$stay',
-                'Reason':'$reason',
-                'Date':'$date',
-                'Month':{'$month': '$date'}
-            }
-    },
-    {
-        $limit: 3
-    }
-])
+// Obtener todas las aerolíneas
+db.airline.find({}, {'_id':0})
 
+// Consulta principal
 db.travel.aggregate([
     {
         $match:
@@ -57,20 +34,5 @@ db.travel.aggregate([
     },
     {
         $sort:
-            { 'month' : 1 } }
-])
-
-
-// Conteo
-db.travel.aggregate([
-    {
-        $match:
-            {
-                'stay': {'$in': ['Hotel','Short-term homestay']},
-                'reason': {'$in': ['On vacation/Pleasure','Back Home']}
-            }
-    },
-    {
-        $count: 'conteo'
-    }
+            { 'qty' : -1 } }
 ])
